@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  FriendsView.swift
 //  PetPal
 //
 //  Created by Rahul Sharma on 11/28/19.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct FriendsView: View {
     
     @FetchRequest(
         entity: Friend.entity(),
@@ -23,7 +23,7 @@ struct ContentView: View {
     @State var isShown: Bool = false
     
     var plusButton: some View {
-        Button( action: { self.isShown = true } ) {
+        Button(action: { self.isShown = true }) {
             Image(systemName: "plus")
         }
     }
@@ -32,13 +32,19 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(friends, id: \.id) { friend in
-                    VStack(alignment: .leading) {
-                        Text(friend.name ?? "Unknown F.R.I.E.N.D.")
-                        HStack {
-                            Text("\(friend.age)")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                            Text(friend.info ?? "Unknown")
+                    NavigationLink(
+                        destination: PetsView(friend: friend)
+                    ) {
+                        VStack(alignment: .leading) {
+                            Text(friend.name ?? "Unknown F.R.I.E.N.D.")
+                            HStack {
+                                Text("\(friend.age)")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                Text("・")
+                                Text(friend.info ?? "Unknown")
+                                    .font(.subheadline)
+                            }
                         }
                     }
                 }
@@ -65,6 +71,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        FriendsView()
     }
 }

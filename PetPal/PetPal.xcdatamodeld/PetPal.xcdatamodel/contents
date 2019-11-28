@@ -5,8 +5,17 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="info" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="pets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Pet" inverseName="owner" inverseEntity="Pet"/>
+    </entity>
+    <entity name="Pet" representedClassName="Pet" syncable="YES">
+        <attribute name="breed" optional="YES" attributeType="String"/>
+        <attribute name="dateOfBirth" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Friend" inverseName="pets" inverseEntity="Friend"/>
     </entity>
     <elements>
-        <element name="Friend" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="Friend" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="Pet" positionX="-63" positionY="9" width="128" height="118"/>
     </elements>
 </model>

@@ -1,5 +1,5 @@
 //
-//  NewFriendView.swift
+//  NewPetView.swift
 //  PetPal
 //
 //  Created by Rahul Sharma on 11/28/19.
@@ -8,69 +8,72 @@
 
 import SwiftUI
 
-struct NewFriendView: View {
+struct NewPetView: View {
     
     @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.presentationMode) var presentationMode
-
+    
     @State var name: String = ""
     @State var dateOfBirth: Date = Date()
-    @State var info: String = ""
+    @State var breed: String = ""
+    
+    var friend: Friend
     
     var body: some View {
         Form {
             Section {
-                TextField("Enter your friend's name", text: $name)
+                TextField("Enter pet's name", text: $name)
             }
             
             DatePicker(
                 selection: $dateOfBirth,
                 displayedComponents: [.date]
             ) {
-                Text("Enter your friend's DOB")
+                Text("Enter pet's DOB")
             }
             
             Section {
-                TextField("Additional info...", text: $info)
+                TextField("Enter pet's breed", text: $breed)
             }
             
             Section {
                 Button(
                     action: {
-                        let friend = Friend(entity: Friend.entity(),
-                                            insertInto: self.managedObjectContext)
-                        friend.id = UUID()
-                        friend.name = self.name
-                        friend.dateOfBirth = self.dateOfBirth
-                        friend.info = self.info
+                        let pet = Pet(entity: Pet.entity(),
+                                      insertInto: self.managedObjectContext)
+                        pet.id = UUID()
+                        pet.name = self.name
+                        pet.dateOfBirth = self.dateOfBirth
+                        pet.breed = self.breed
+                        pet.owner = self.friend
                         
                         try? self.managedObjectContext.save()
                         
                         self.presentationMode.wrappedValue.dismiss()
-                    }
+                }
                 ) {
                     Text("Add")
                 }
                 
             }
-                
+            
             Section {
                 Button(
                     action: {
                         self.presentationMode.wrappedValue.dismiss()
-                    }
+                }
                 ) {
                     Text("Cancel")
                 }
             }
         }
-
+        
     }
     
 }
 
-struct NewFriendView_Previews: PreviewProvider {
+struct NewPetView_Previews: PreviewProvider {
     static var previews: some View {
-        NewFriendView()
+        NewPetView(friend: Friend())
     }
 }
