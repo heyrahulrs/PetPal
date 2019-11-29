@@ -38,19 +38,7 @@ struct NewPetView: View {
             
             Section {
                 Button(
-                    action: {
-                        let pet = Pet(entity: Pet.entity(),
-                                      insertInto: self.managedObjectContext)
-                        pet.id = UUID()
-                        pet.name = self.name
-                        pet.dateOfBirth = self.dateOfBirth
-                        pet.breed = self.breed
-                        pet.owner = self.friend
-                        
-                        try? self.managedObjectContext.save()
-                        
-                        self.presentationMode.wrappedValue.dismiss()
-                }
+                    action: { self.addPet() }
                 ) {
                     Text("Add")
                 }
@@ -59,9 +47,7 @@ struct NewPetView: View {
             
             Section {
                 Button(
-                    action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                }
+                    action: { self.presentationMode.wrappedValue.dismiss() }
                 ) {
                     Text("Cancel")
                 }
@@ -70,10 +56,17 @@ struct NewPetView: View {
         
     }
     
-}
-
-struct NewPetView_Previews: PreviewProvider {
-    static var previews: some View {
-        NewPetView(friend: Friend())
+    func addPet() {
+        let pet = Pet(entity: Pet.entity(),
+                      insertInto: managedObjectContext)
+        pet.id = UUID()
+        pet.name = name
+        pet.dateOfBirth = dateOfBirth
+        pet.breed = breed
+        pet.owner = friend
+        
+        try? managedObjectContext.save()
+        
+        presentationMode.wrappedValue.dismiss()
     }
 }

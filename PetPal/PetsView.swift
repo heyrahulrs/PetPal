@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import CoreData
 
 struct PetsView: View {
     
@@ -76,10 +75,4 @@ struct PetsView: View {
         }
     }
     
-}
-
-struct PetsView_Previews: PreviewProvider {
-    static var previews: some View {
-        PetsView(friend: Friend())
-    }
 }

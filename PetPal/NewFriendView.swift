@@ -36,18 +36,7 @@ struct NewFriendView: View {
             
             Section {
                 Button(
-                    action: {
-                        let friend = Friend(entity: Friend.entity(),
-                                            insertInto: self.managedObjectContext)
-                        friend.id = UUID()
-                        friend.name = self.name
-                        friend.dateOfBirth = self.dateOfBirth
-                        friend.info = self.info
-                        
-                        try? self.managedObjectContext.save()
-                        
-                        self.presentationMode.wrappedValue.dismiss()
-                    }
+                    action: { self.addFriend() }
                 ) {
                     Text("Add")
                 }
@@ -56,9 +45,7 @@ struct NewFriendView: View {
                 
             Section {
                 Button(
-                    action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }
+                    action: { self.presentationMode.wrappedValue.dismiss() }
                 ) {
                     Text("Cancel")
                 }
@@ -67,10 +54,17 @@ struct NewFriendView: View {
 
     }
     
-}
-
-struct NewFriendView_Previews: PreviewProvider {
-    static var previews: some View {
-        NewFriendView()
+    func addFriend() {
+        let friend = Friend(entity: Friend.entity(),
+                            insertInto: managedObjectContext)
+        friend.id = UUID()
+        friend.name = name
+        friend.dateOfBirth = dateOfBirth
+        friend.info = info
+        
+        try? managedObjectContext.save()
+        
+        presentationMode.wrappedValue.dismiss()
     }
+    
 }
